@@ -10,10 +10,13 @@ import com.pitstop.mobilecarwash.service.RoleService;
 import com.pitstop.mobilecarwash.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Profile;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -21,6 +24,9 @@ import org.springframework.web.filter.CorsFilter;
 import java.util.Date;
 
 @SpringBootApplication
+@ComponentScan
+@EnableAutoConfiguration
+@EnableScheduling
 public class MobileCarWashApplication {
 
 	@Bean
