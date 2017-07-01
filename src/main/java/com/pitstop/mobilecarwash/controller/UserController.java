@@ -135,8 +135,7 @@ public class UserController {
                 System.out.println("user dto after parsing is " + userDTO);
                 logger.info("user dto after parsing is --- " + userDTO);
                 user = userService.addUser(userDTO);
-                String address = "http://46.101.253.144/#/sign-in";
-                EmailUtil.sendEmail(user.getEmailAddress(),"Textbook Registration","",address);
+                EmailUtil.sendEmail(user.getEmailAddress(),"Pitstop Car Wash Registration","");
                 System.out.println("done sending emails");
                 return new ResponseEntity<>(user, HttpStatus.CREATED);
             }
@@ -236,4 +235,36 @@ public class UserController {
             return new ResponseEntity<>(Message.create(e.getLocalizedMessage()), HttpStatus.BAD_REQUEST);
         }
     }
+
+
+    @RequestMapping(value = "/forgotPassword", method = RequestMethod.POST)
+    public ResponseEntity forgotPassword(@RequestHeader(value = "Authorization", defaultValue = "foo") String authorization, @RequestBody String json) {
+        try {
+            if (!SecurityUtils.authorize(authorization))
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            User user;
+            final JsonNode data = mapper.readTree(json);
+            User userDTO = UserUtils.resetPassword(json,mapper,userService);
+            user = userService.updateUser(userDTO);
+
+            if (user != null) {
+                System.out.println("user is " + user.toString());
+                return new ResponseEntity<>(new ObjectMapper().writeValueAsString(user), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(Message.create("Error getting user"), HttpStatus.BAD_REQUEST);
+            }
+        } catch (IOException e) {
+            logger.debug(e.getLocalizedMessage());
+            return new ResponseEntity<>(Message.create(e.getLocalizedMessage()), HttpStatus.BAD_REQUEST);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(Message.create(e.getLocalizedMessage()), HttpStatus.BAD_REQUEST);
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(Message.create(e.getLocalizedMessage()), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+
 }

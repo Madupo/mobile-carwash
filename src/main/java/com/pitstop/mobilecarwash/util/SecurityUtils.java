@@ -20,11 +20,8 @@ public class SecurityUtils {
 
     public static boolean authorize(String authorization) {
         String[] array = authorization.split(" ");
-
-        logger.info("value of authorisation is " + authorization);
         if(array.length == 2) {
             String basic = new String(Base64.decodeBase64(array[1]));
-            logger.info(basic);
             return user.equals(basic);
         }
         else return false;
@@ -37,6 +34,7 @@ public class SecurityUtils {
             String salt = enc.getSalt();
             user.setSalt(salt);
             try {
+                System.out.println("new password before encryption is " +  user.getPassword());
                 String encryptedPassword = enc.generateStrongPasswordHash(user.getPassword(), user.getSalt());
                 user.setPassword(encryptedPassword);
             } catch (InvalidKeySpecException e) {
