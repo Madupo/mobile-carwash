@@ -1,0 +1,20 @@
+secondhandtextbook-api:
+ container_name : mobilecarwash-api
+ image : web/mobilecarwash:Latest
+ external_links:
+ - carwash-db
+ ports :
+ - "3001:8000"
+
+#textbook-db:
+#  image: textbook-db
+#  container_name: textbook-db
+#  ports:
+#   - "3306:3306"
+#  environment:
+#  MYSQL_DATABASE: textbook-db
+#   MYSQL_ALLOW_EMPTY_PASSWORD: 1
+#   MYSQL_ROOT_PASSWORD: books
+#   cpus: '0.001'
+#   memory: 500M
+
