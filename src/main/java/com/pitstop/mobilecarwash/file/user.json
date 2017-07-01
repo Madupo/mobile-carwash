@@ -1,0 +1,19 @@
+[
+  {
+    "name": "Emmie",
+    "surname": "Madupo",
+    "emailAddress": "emmanuelmadupo2@gmail.com",
+    "firstTimeLoggedIn": true,
+    "role": {
+      "id": 1,
+      "roleName": "user"
+    },
+    "cellphone":"083 962 8990",
+    "complexNumber":"A102",
+    "creditBalance":0.00,
+    "password": "12345",
+    "created": null,
+    "modified": null,
+    "active": true
+  }
+]
