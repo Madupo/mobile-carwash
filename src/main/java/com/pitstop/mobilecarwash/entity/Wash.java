@@ -32,8 +32,9 @@ public class Wash {
     @Column
     private String additionalInformation;
 
-    @Column
-    private String washType;
+    @ManyToOne
+    @JoinColumn(name = "wash_type_id")
+    private WashType washType;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss",timezone="CAT")
     @Column
@@ -52,7 +53,7 @@ public class Wash {
     public Wash() {
     }
 
-    public Wash(String preferredDate, String preferredTime, int numberOfVehicles, String washStatus, String additionalInformation, String washType, Date created, Date modified, User user) {
+    public Wash(String preferredDate, String preferredTime, int numberOfVehicles, String washStatus, String additionalInformation, WashType washType, Date created, Date modified, User user) {
         this.preferredDate = preferredDate;
         this.preferredTime = preferredTime;
         this.numberOfVehicles = numberOfVehicles;
@@ -112,11 +113,11 @@ public class Wash {
         this.additionalInformation = additionalInformation;
     }
 
-    public String getWashType() {
+    public WashType getWashType() {
         return washType;
     }
 
-    public void setWashType(String washType) {
+    public void setWashType(WashType washType) {
         this.washType = washType;
     }
 

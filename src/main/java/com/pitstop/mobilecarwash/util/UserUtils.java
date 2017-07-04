@@ -149,6 +149,5 @@ public class UserUtils {
         }
 
         return null;
-
     }
 }
