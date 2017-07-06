@@ -2,12 +2,15 @@ package com.pitstop.mobilecarwash;
 
 import com.pitstop.mobilecarwash.entity.Complex;
 import com.pitstop.mobilecarwash.entity.Role;
+import com.pitstop.mobilecarwash.entity.WashType;
 import com.pitstop.mobilecarwash.repository.ComplexRepository;
 import com.pitstop.mobilecarwash.repository.RoleRepository;
 import com.pitstop.mobilecarwash.repository.UserRepository;
+import com.pitstop.mobilecarwash.repository.WashTypeRepository;
 import com.pitstop.mobilecarwash.service.ComplexService;
 import com.pitstop.mobilecarwash.service.RoleService;
 import com.pitstop.mobilecarwash.service.UserService;
+import com.pitstop.mobilecarwash.service.WashTypeService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -50,7 +53,7 @@ public class MobileCarWashApplication {
 
 	@Bean
 	@Profile("dev")
-	public CommandLineRunner testingDemoDev(UserRepository userRepository, UserService userService, RoleRepository roleRepository, RoleService roleService, ComplexRepository complexRepository, ComplexService complexService) {
+	public CommandLineRunner testingDemoDev(UserRepository userRepository, UserService userService, RoleRepository roleRepository, RoleService roleService, ComplexRepository complexRepository, ComplexService complexService, WashTypeRepository washTypeRepository, WashTypeService washTypeService) {
 		return (args) -> {
 			Role role = new Role("user");
 			Role roleAdmin = new Role("admin");
@@ -60,6 +63,13 @@ public class MobileCarWashApplication {
 			//// TODO: 2017/06/30 add default complex
 			Complex complex = new Complex("First Complex","46 Geranium Street, Birch Acres, Kempton Park",new Date(),new Date());
 			complexService.addComplex(complex);
+
+			//// TODO: 2017/07/04 add default wash types
+			WashType washType = new WashType("Full Wash",90.00);
+			WashType washType1 = new WashType("Interior Wash", 50.00);
+			washTypeService.addWashType(washType);
+			washTypeService.addWashType(washType1);
+
 
 			//// TODO: 2017/06/30 add default user
 

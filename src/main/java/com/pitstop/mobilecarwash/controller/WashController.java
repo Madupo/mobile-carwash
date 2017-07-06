@@ -2,10 +2,13 @@ package com.pitstop.mobilecarwash.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.netflix.discovery.converters.Auto;
 import com.pitstop.mobilecarwash.entity.Message;
 import com.pitstop.mobilecarwash.entity.User;
 import com.pitstop.mobilecarwash.entity.Wash;
 import com.pitstop.mobilecarwash.service.BookAWashService;
+import com.pitstop.mobilecarwash.service.UserService;
+import com.pitstop.mobilecarwash.service.WashTypeService;
 import com.pitstop.mobilecarwash.util.EmailUtil;
 import com.pitstop.mobilecarwash.util.SecurityUtils;
 import com.pitstop.mobilecarwash.util.UserUtils;
@@ -33,6 +36,12 @@ import java.security.spec.InvalidKeySpecException;
 public class WashController {
     @Autowired
     private BookAWashService bookAWashService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private WashTypeService washTypeService;
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -72,19 +81,12 @@ public class WashController {
 
             Wash wash;
 
-
-
-
                 System.out.println("email address number doesn't exist");
-                Wash  washDTO = WashUtils.parse(json, mapper, bookAWashService);
-
-
+                Wash  washDTO = WashUtils.parse(json, mapper, bookAWashService,washTypeService,userService);
                 wash = bookAWashService.bookWash(washDTO);
-                EmailUtil.sendEmail(user.getEmailAddress(),"Pitstop Car Wash Registration","");
-                System.out.println("done sending emails");
-                return new ResponseEntity<>(user, HttpStatus.CREATED);
-
-
+                /*EmailUtil.sendEmail(user.getEmailAddress(),"Pitstop Car Wash Registration","");
+                System.out.println("done sending emails");*/
+                return new ResponseEntity<>(wash, HttpStatus.CREATED);
         } catch (RuntimeException e) {
             logger.debug(e.getLocalizedMessage());
             System.out.println("reaches RuntimeException catch " + e.getLocalizedMessage());
@@ -93,18 +95,11 @@ public class WashController {
             logger.debug(e.getLocalizedMessage());
 
             return new ResponseEntity<>(Message.create(e.getLocalizedMessage()), HttpStatus.BAD_REQUEST);
-        } catch (NoSuchAlgorithmException e) {
-            logger.debug(e.getLocalizedMessage());
-            System.out.println("reaches NoSuchAlgorithmException catch " + e.getLocalizedMessage());
-            return new ResponseEntity<>(Message.create(e.getLocalizedMessage()), HttpStatus.BAD_REQUEST);
-        } catch (InvalidKeySpecException e) {
-            logger.debug(e.getLocalizedMessage());
-            System.out.println("reaches InvalidKeySpecException catch " + e.getLocalizedMessage());
-            return new ResponseEntity<>(Message.create(e.getLocalizedMessage()), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             System.out.println("reaches last catch " + e.getLocalizedMessage());
             logger.debug(e.getLocalizedMessage());
             return new ResponseEntity<>(Message.create(e.getLocalizedMessage()), HttpStatus.FORBIDDEN);
         }
 
+}
 }

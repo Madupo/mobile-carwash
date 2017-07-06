@@ -1,0 +1,39 @@
+{
+  "id": 1,
+  "preferredDate": "24 July 2017",
+  "preferredTime": "08:00 to 10:00",
+  "numberOfVehicles": 2,
+  "washStatus": "booked",
+  "additionalInformation": "Dont wash it now",
+  "washType": {
+    "id": 1,
+    "washTypeName": "Full Wash",
+    "basePrice": 90
+  },
+  "created": "2017-07-04 22:33:16",
+  "modified": "2017-07-04 22:33:16",
+  "user": {
+    "id": 1,
+    "name": "Emmie",
+    "surname": "Madupo",
+    "emailAddress": "emmanuelmadupo@gmail.com",
+    "firstTimeLoggedIn": false,
+    "role": {
+      "id": 1,
+      "roleName": "user"
+    },
+    "complex": {
+      "id": 1,
+      "complexName": "First Complex",
+      "complexLocation": "46 Geranium Street, Birch Acres, Kempton Park",
+      "created": "2017-07-04 22:30:21",
+      "modified": "2017-07-04 22:30:21"
+    },
+    "created": "2017-07-04 22:31:43",
+    "modified": "2017-07-04 22:31:43",
+    "cellphone": "083 962 8990",
+    "complexNumber": "A102",
+    "creditBalance": 0,
+    "active": true
+  }
+}

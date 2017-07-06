@@ -42,8 +42,8 @@ public class UserServiceImpl implements UserService {
             newUser.setSurname(user.getSurname());
 
             //// TODO: 2017/06/28 add logic to update complex in update profile
-
-
+            newUser.setComplex(user.getComplex());
+            newUser.setComplexNumber(user.getComplexNumber());
             return userRepository.save(user);
         }
         throw new EntityNotFoundException("User cannot be updated. Not found!");
