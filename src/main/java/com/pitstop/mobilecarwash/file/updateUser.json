@@ -1,0 +1,18 @@
+{
+  "id": 1,
+  "name": "Emmanuel",
+  "surname": "Madupo",
+  "emailAddress": "emmanuelmadupo@gmail.com",
+  "firstTimeLoggedIn": false,
+  "role": {
+    "id": 1,
+    "roleName": "user"
+  },
+  "complexId":1,
+  "created": "2017-07-06 18:09:40",
+  "modified": "2017-07-06 18:09:40",
+  "cellphone": "083 962 8990",
+  "complexNumber": "A102",
+  "creditBalance": 0,
+  "active": true
+}

@@ -16,6 +16,6 @@ public interface BookAWashService {
     Wash cancelWash(Wash wash);
     List<Wash> getAllWashes();
     Wash getOneWash(long washId);
-    Wash getUsersWashes(long userId);
+    List<Wash> getUsersWashes(long userId);
 
 }

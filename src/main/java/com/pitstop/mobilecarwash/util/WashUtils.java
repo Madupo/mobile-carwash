@@ -19,43 +19,46 @@ public class WashUtils {
 
         JsonNode node = mapper.readTree(json);
         System.out.print("\nwe have\n"+node.toString());
+        Wash wash;
+        if(node.has("id")){
+             wash = washService.getOneWash(node.get("id").asLong());
+            if(wash!= null) {
+                if(node.has("preferredTime")){ wash.setPreferredTime(node.get("preferredTime").asText());}
+                if(node.has("preferredDate")){ wash.setPreferredDate(node.get("preferredDate").asText());}
+                if(node.has("numberOfVehicles")){wash.setNumberOfVehicles(node.get("numberOfVehicles").asInt());}
+                if(node.has("washStatus")){ wash.setWashStatus(node.get("washStatus").asText());}
+                if(node.has("additionalInformation")){ wash.setAdditionalInformation(node.get("additionalInformation").asText());}
 
-        Wash wash = washService.getOneWash(node.get("washId").asLong());
-        if(wash!= null) {
-            if(node.has("preferredTime")){ wash.setPreferredTime(node.get("preferredTime").asText());}
-            if(node.has("preferredDate")){ wash.setPreferredTime(node.get("preferredDate").asText());}
-            if(node.has("numberOfVehicles")){ wash.setPreferredTime(node.get("numberOfVehicles").asText());}
-            if(node.has("washStatus")){ wash.setPreferredTime(node.get("washStatus").asText());}
-            if(node.has("additionalInformation")){ wash.setPreferredTime(node.get("additionalInformation").asText());}
-
-            if(node.has("wash_type_id")){
-                long wash_type_id = node.get("wash_type_id").asLong();
-                WashType washType = washTypeService.getOneWashType(wash_type_id);
-                if(washType!=null){
-                    wash.setWashType(washType);
-                }else{
-                    throw new NullPointerException("wash type not found please check your Details again");
+                if(node.has("wash_type_id")){
+                    long wash_type_id = node.get("wash_type_id").asLong();
+                    WashType washType = washTypeService.getOneWashType(wash_type_id);
+                    if(washType!=null){
+                        wash.setWashType(washType);
+                    }else{
+                        throw new NullPointerException("wash type not found please check your Details again");
+                    }
                 }
-            }
-            wash.setModified(new Date());
+                wash.setModified(new Date());
 
-        }else{
+            }
+        }
+        else{
              wash = new Wash();
             if(node.has("preferredDate"))
             {
+                System.out.println("preferredDate is present");
                 String preferredDate = node.get("preferredDate").asText();
                 wash.setPreferredDate(preferredDate);
-            }else
-            {
-                throw new NullPointerException("preferredDate not found please check your Details");
             }
 
             if(node.has("preferredTime")){
+                System.out.println("preferredTime is present");
                 String preferredTime = node.get("preferredTime").asText();
                 wash.setPreferredTime(preferredTime);
             }
 
             if(node.has("numberOfVehicles")){
+                System.out.println("numberOfVehicles is present");
                 int numberOfVehicles = node.get("numberOfVehicles").asInt();
                 wash.setNumberOfVehicles(numberOfVehicles);
             }
@@ -68,11 +71,13 @@ public class WashUtils {
 
 
             if(node.has("additionalInformation")){
+                System.out.println("additionalInformation is present");
                 String additionalInformation = node.get("additionalInformation").asText();
                 wash.setAdditionalInformation(additionalInformation);
             }
 
             if(node.has("wash_type_id")){
+                System.out.println("wash type id is present");
                 long wash_type_id = node.get("wash_type_id").asLong();
                 WashType washType = washTypeService.getOneWashType(wash_type_id);
                 if(washType!=null){
@@ -94,7 +99,7 @@ public class WashUtils {
             }
 
         }
-
+        System.out.println("wash before returning is" + wash);
         return wash;
     }
 }

@@ -144,4 +144,20 @@ public class Wash {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return "Wash{" +
+                "id=" + id +
+                ", preferredDate='" + preferredDate + '\'' +
+                ", preferredTime='" + preferredTime + '\'' +
+                ", numberOfVehicles=" + numberOfVehicles +
+                ", washStatus='" + washStatus + '\'' +
+                ", additionalInformation='" + additionalInformation + '\'' +
+                ", washType=" + washType +
+                ", created=" + created +
+                ", modified=" + modified +
+                ", user=" + user +
+                '}';
+    }
 }

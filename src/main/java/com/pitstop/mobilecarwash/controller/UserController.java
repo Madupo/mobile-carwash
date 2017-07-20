@@ -125,19 +125,19 @@ public class UserController {
             User user;
 
             if(userService.getUserByEmail(data.get("emailAddress").asText())!= null){
-                return new ResponseEntity<>(Message.create("User with email:  " + data.get("emailAddress").asLong() + " already exists."), HttpStatus.CONFLICT);
+                return new ResponseEntity<>(Message.create("User with email:  " + data.get("emailAddress").asText() + " already exists."), HttpStatus.CONFLICT);
             }
 
 
             else{
                 System.out.println("email address number doesn't exist");
-                User userDTO = UserUtils.parse(json, mapper, userService,complexService);
+                User userDTO = UserUtils.parse(json, mapper, userService,complexService,roleService);
                 System.out.println("user dto after parsing is " + userDTO);
                 logger.info("user dto after parsing is --- " + userDTO);
                 user = userService.addUser(userDTO);
                 EmailUtil.sendEmail(user.getEmailAddress(),"Pitstop Car Wash Registration","");
                 System.out.println("done sending emails");
-                return new ResponseEntity<>(user, HttpStatus.CREATED);
+                return new ResponseEntity<>(new ObjectMapper().writeValueAsString(user), HttpStatus.CREATED);
             }
 
         } catch (RuntimeException e) {
@@ -193,7 +193,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/[id]", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity getOneUser(@RequestHeader(value ="Authorization", defaultValue ="foo")String
                                               authorization,  @PathVariable String id) {
         try {
@@ -213,6 +213,30 @@ public class UserController {
     }
 
 
+    @RequestMapping(value = "/email", method = RequestMethod.POST)
+    public ResponseEntity findByEmail(@RequestHeader(value = "Authorization", defaultValue = "foo") String authorization, @RequestBody String json) {
+        try {
+            if (!SecurityUtils.authorize(authorization))
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            User foundUser=null;
+            final JsonNode data = mapper.readTree(json);
+            if(data.has("emailAddress")){
+                 foundUser = userService.getUserByEmail(data.get("emailAddress").asText());
+                if (foundUser != null) {
+                    System.out.println("user is " + foundUser.toString());
+                    return new ResponseEntity<>(new ObjectMapper().writeValueAsString(foundUser), HttpStatus.OK);
+                } else {
+                    return new ResponseEntity<>(Message.create("Error getting user"), HttpStatus.BAD_REQUEST);
+                }
+            }
+            else{
+                return new ResponseEntity<>(Message.create("No email address provided"), HttpStatus.BAD_REQUEST);
+            }
+        } catch (IOException e) {
+            logger.debug(e.getLocalizedMessage());
+            return new ResponseEntity<>(Message.create(e.getLocalizedMessage()), HttpStatus.BAD_REQUEST);
+        }
+    }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity updateUser(@RequestHeader(value = "Authorization", defaultValue = "foo") String authorization, @RequestBody String json) {
@@ -221,7 +245,7 @@ public class UserController {
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             User user;
             final JsonNode data = mapper.readTree(json);
-            User userDTO = UserUtils.parse(json,mapper,userService,complexService);
+            User userDTO = UserUtils.parse(json,mapper,userService,complexService,roleService);
             user = userService.updateUser(userDTO);
 
             if (user != null) {
@@ -265,6 +289,48 @@ public class UserController {
         }
     }
 
+    @RequestMapping(value = "/contactUs", method = RequestMethod.POST)
+    public ResponseEntity sendContactUs(@RequestHeader(value = "Authorization", defaultValue = "foo") String authorization, @RequestBody String json) {
+        try {
+            if (!SecurityUtils.authorize(authorization))
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            final JsonNode data = mapper.readTree(json);
+            String name="";
+            String message="";
+            String emailAddress="";
+            String cellphoneNumber="";
 
+            if(data.has("name")){
+             name = data.get("name").asText();
+            }
 
+            if(data.has("emailAddress")){
+                emailAddress = data.get("emailAddress").asText();
+            }
+            else{
+                throw new NullPointerException("Email address not provided");
+            }
+
+            if(data.has("message")){
+                message = data.get("message").asText();
+            }
+            else
+            {
+                throw new NullPointerException("Message not provided");
+            }
+
+            if(data.has("cellphoneNumber")){
+                cellphoneNumber = data.get("cellphoneNumber").asText();
+            }
+            EmailUtil.sendContactUsEmail(name,emailAddress,cellphoneNumber,message);
+
+                return new ResponseEntity<>(Message.create("Email successfully sent"), HttpStatus.OK);
+
+        } catch (IOException e) {
+            logger.debug(e.getLocalizedMessage());
+            return new ResponseEntity<>(Message.create(e.getLocalizedMessage()), HttpStatus.BAD_REQUEST);
+        }
+    }
 }
+
+

@@ -14,4 +14,5 @@ import java.util.List;
 public interface RoleService {
      Role addRole(Role role);
      List<Role> getRoles();
+     Role getRole(long roleId);
 }

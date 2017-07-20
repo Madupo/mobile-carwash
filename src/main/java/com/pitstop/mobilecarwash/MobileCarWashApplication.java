@@ -1,16 +1,8 @@
 package com.pitstop.mobilecarwash;
 
-import com.pitstop.mobilecarwash.entity.Complex;
-import com.pitstop.mobilecarwash.entity.Role;
-import com.pitstop.mobilecarwash.entity.WashType;
-import com.pitstop.mobilecarwash.repository.ComplexRepository;
-import com.pitstop.mobilecarwash.repository.RoleRepository;
-import com.pitstop.mobilecarwash.repository.UserRepository;
-import com.pitstop.mobilecarwash.repository.WashTypeRepository;
-import com.pitstop.mobilecarwash.service.ComplexService;
-import com.pitstop.mobilecarwash.service.RoleService;
-import com.pitstop.mobilecarwash.service.UserService;
-import com.pitstop.mobilecarwash.service.WashTypeService;
+import com.pitstop.mobilecarwash.entity.*;
+import com.pitstop.mobilecarwash.repository.*;
+import com.pitstop.mobilecarwash.service.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -53,7 +45,7 @@ public class MobileCarWashApplication {
 
 	@Bean
 	@Profile("dev")
-	public CommandLineRunner testingDemoDev(UserRepository userRepository, UserService userService, RoleRepository roleRepository, RoleService roleService, ComplexRepository complexRepository, ComplexService complexService, WashTypeRepository washTypeRepository, WashTypeService washTypeService) {
+	public CommandLineRunner testingDemoDev(UserRepository userRepository, UserService userService, RoleRepository roleRepository, RoleService roleService, ComplexRepository complexRepository, ComplexService complexService, WashTypeRepository washTypeRepository, WashTypeService washTypeService, WashTimeRepository washTimeRepository, WashTimeService washTimeService) {
 		return (args) -> {
 			Role role = new Role("user");
 			Role roleAdmin = new Role("admin");
@@ -70,9 +62,15 @@ public class MobileCarWashApplication {
 			washTypeService.addWashType(washType);
 			washTypeService.addWashType(washType1);
 
+			//// TODO: 2017/07/17 add default washes
+			WashTime washTime = new WashTime("08:00 to 10:00");
+			WashTime washTime1 = new WashTime("10:00 to 11:00");
+
+			washTimeService.addWashTime(washTime);
+			washTimeService.addWashTime(washTime1);
+
 
 			//// TODO: 2017/06/30 add default user
-
 			//adding categories and faculties
 			/*User user = new User("Emmie","Madupo",211391901,"emmanuelmadupo@gmail.com","12345",true,role,"0839628990",true);
 			System.out.println("User about to be added is " + user);

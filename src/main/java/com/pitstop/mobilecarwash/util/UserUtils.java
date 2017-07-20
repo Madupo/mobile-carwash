@@ -7,6 +7,7 @@ import com.pitstop.mobilecarwash.entity.Role;
 import com.pitstop.mobilecarwash.entity.User;
 import com.pitstop.mobilecarwash.security.PasswordEncrypt;
 import com.pitstop.mobilecarwash.service.ComplexService;
+import com.pitstop.mobilecarwash.service.RoleService;
 import com.pitstop.mobilecarwash.service.UserService;
 
 
@@ -19,7 +20,7 @@ import java.util.Date;
  * Created by Emmie on 2017/04/07.
  */
 public class UserUtils {
-    public static User parse(final String json, ObjectMapper mapper, UserService userService, ComplexService complexService) throws IOException {
+    public static User parse(final String json, ObjectMapper mapper, UserService userService, ComplexService complexService, RoleService roleService) throws IOException {
 
         JsonNode node = mapper.readTree(json);
         System.out.print("\nwe have\n"+node.toString());
@@ -28,11 +29,27 @@ public class UserUtils {
         User user = userService.getUserByEmail(node.get("emailAddress").asText());
         if(user != null) {
 
-            if(node.has("name")){ user.setName(node.get("surname").asText());}
+            if(node.has("name")){ user.setName(node.get("name").asText());}
             if(node.has("surname")){ user.setSurname(node.get("surname").asText());}
             if(node.has("emailAddress")){ user.setEmailAddress(node.get("emailAddress").asText());}
             if(node.has("cellphone")){ user.setCellphone(node.get("cellphone").asText());}
-            if(node.has("complexNumber")){ user.setCellphone(node.get("complexNumber").asText());}
+            if(node.has("complexNumber")){user.setComplexNumber(node.get("complexNumber").asText());}
+            if(node.has("active")){ user.setActive(node.get("active").asBoolean());}
+            if(node.has("complexId")){
+                long complex_id = node.get("complexId").asLong();
+                Complex complex = complexService.getComplex(complex_id);
+                if(complex!=null){
+                    user.setComplex(complex);
+                }
+                else{
+                    throw new NullPointerException("Complex not found please check your update Details");
+                }
+
+            }
+            else{
+                throw new NullPointerException("Please provide a complex");
+            }
+            user.setModified(new Date());
 
         }
         else {
@@ -78,7 +95,7 @@ public class UserUtils {
                 throw new NullPointerException("Please provide a complex");
             }
 
-            if(node.has("role")){
+            /*if(node.has("role")){
                 try {
                     JsonNode arrNode = mapper.readTree(json).get("role");
                     System.out.println("array node is " + arrNode);
@@ -86,7 +103,18 @@ public class UserUtils {
                     role.setRoleName(arrNode.get("roleName").asText());
                 }catch(Exception exp){
                 }
+            }*/
+
+            //set role user by default
+            long userRoleId = 1;
+            Role foundRole = roleService.getRole(userRoleId);
+            if(foundRole!=null){
+                user.setRole(foundRole);
             }
+            else{
+                throw new NullPointerException("Role not found in database");
+            }
+
 
             if(node.has("complexNumber")){
                 String complexNumber = node.get("complexNumber").asText();
@@ -98,16 +126,17 @@ public class UserUtils {
                 user.setPassword(password);
             }
 
-           user.setRole(role);
 
 
+            user.setCreated(new Date());
+            //default values
+            user.setCreditBalance(0.00);
+
+            user.setActive(true);
+            user.setFirstTimeLoggedIn(false);
+            user.setModified(new Date());
         }
-        //default values
-        user.setCreditBalance(0.00);
-        user.setCreated(new Date());
-        user.setActive(true);
-        user.setFirstTimeLoggedIn(false);
-        user.setModified(new Date());
+
         return user;
     }
 
