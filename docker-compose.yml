@@ -2,7 +2,7 @@ secondhandtextbook-api:
  container_name : mobilecarwash-api
  image : web/mobilecarwash:Latest
  external_links:
- - carwash-db
+ - textbook-db
  ports :
  - "3001:8000"
 

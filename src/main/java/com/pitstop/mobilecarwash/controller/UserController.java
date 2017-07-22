@@ -222,6 +222,7 @@ public class UserController {
             final JsonNode data = mapper.readTree(json);
             if(data.has("emailAddress")){
                  foundUser = userService.getUserByEmail(data.get("emailAddress").asText());
+                System.out.println("found user is " + foundUser);
                 if (foundUser != null) {
                     System.out.println("user is " + foundUser.toString());
                     return new ResponseEntity<>(new ObjectMapper().writeValueAsString(foundUser), HttpStatus.OK);

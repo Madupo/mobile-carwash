@@ -150,12 +150,9 @@ public class UserUtils {
             User user = userService.getUserByEmail(node.get("emailAddress").asText());
             if(user!=null){
                 //generate password
-                String currentPassword = node.get("currentPassword").asText();
-
-                if(new PasswordEncrypt().validatePassword(currentPassword, user.getPassword())){
-                    //after password is validated, you need to create a new password based on the new password provided
+                String newPassword = node.get("password").asText();
                     //first set the user password
-                    String newPassword = node.get("newPassword").asText();
+
                     user.setPassword(newPassword);
 
                     System.out.println("new password is " + user.getPassword());
@@ -166,7 +163,7 @@ public class UserUtils {
                         return user;
                     }
 
-                }
+
             }
             else
             {
