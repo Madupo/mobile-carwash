@@ -65,7 +65,7 @@ spring:
 ---
 
 server:
-    port: 9100
+    port: 8000
 
 #spring:
 #  jpa:
