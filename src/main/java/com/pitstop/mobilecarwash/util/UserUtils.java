@@ -34,8 +34,8 @@ public class UserUtils {
             if(node.has("emailAddress")){ user.setEmailAddress(node.get("emailAddress").asText());}
             if(node.has("cellphone")){ user.setCellphone(node.get("cellphone").asText());}
             if(node.has("complexNumber")){user.setComplexNumber(node.get("complexNumber").asText());}
-            if(node.has("active")){ user.setActive(node.get("active").asBoolean());}
-            if(node.has("complexId")){
+           /* if(node.has("active")){ user.setActive(node.get("active").asBoolean());}*/
+            /*if(node.has("complexId")){
                 long complex_id = node.get("complexId").asLong();
                 Complex complex = complexService.getComplex(complex_id);
                 if(complex!=null){
@@ -45,7 +45,22 @@ public class UserUtils {
                     throw new NullPointerException("Complex not found please check your update Details");
                 }
 
+            }*/
+
+
+            if(node.has("complex")){
+                try {
+                    JsonNode arrNode = mapper.readTree(json).get("complex");
+                    System.out.println("array node is " + arrNode);
+                      long complex_id = node.get("id").asLong();
+                    Complex complex = complexService.getComplex(complex_id);
+                if(complex!=null){
+                    user.setComplex(complex);
+                }
+                }catch(Exception exp){
+                }
             }
+
             else{
                 throw new NullPointerException("Please provide a complex");
             }
@@ -53,7 +68,6 @@ public class UserUtils {
 
         }
         else {
-
             user = new User();
             role = new Role();
             if(node.has("emailAddress"))
