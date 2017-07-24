@@ -27,8 +27,9 @@ public class UserUtils {
         String email;
         Role role;
         User user = userService.getUserByEmail(node.get("emailAddress").asText());
+        System.out.println("user via email is " + user);
         if(user != null) {
-
+            System.out.println("user is not null" + user);
             if(node.has("name")){ user.setName(node.get("name").asText());}
             if(node.has("surname")){ user.setSurname(node.get("surname").asText());}
             if(node.has("emailAddress")){ user.setEmailAddress(node.get("emailAddress").asText());}
