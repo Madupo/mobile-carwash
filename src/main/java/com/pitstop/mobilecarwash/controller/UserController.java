@@ -25,6 +25,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.mail.MessagingException;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -306,7 +307,9 @@ public class UserController {
             }
 
             if(data.has("emailAddress")){
+
                 emailAddress = data.get("emailAddress").asText();
+                System.out.println("email address is " + emailAddress);
             }
             else{
                 throw new NullPointerException("Email address not provided");
@@ -330,6 +333,8 @@ public class UserController {
         } catch (IOException e) {
             logger.debug(e.getLocalizedMessage());
             return new ResponseEntity<>(Message.create(e.getLocalizedMessage()), HttpStatus.BAD_REQUEST);
+        } catch (MessagingException e) {
+            return new ResponseEntity<>(Message.create("There was an error sending emails"), HttpStatus.BAD_REQUEST);
         }
     }
 }

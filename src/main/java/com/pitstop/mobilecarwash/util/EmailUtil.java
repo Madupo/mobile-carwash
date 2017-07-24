@@ -49,10 +49,16 @@ public class EmailUtil {
         }
 
 
-    public static void sendContactUsEmail(String name,String sender,String contactNumber, String emailMessage){
+    public static void sendContactUsEmail(String name,String sender,String contactNumber, String emailMessage) throws MessagingException{
 
-        try { final String username = "emmanuelmadupo@gmail.com";
+        final String username = "emmanuelmadupo@gmail.com";
             final String password = "Emmie@24";
+
+        System.out.println("user to send email is " + sender);
+        System.out.println("user to receive email is " + username);
+
+        String senderId=sender;
+        String receiverId = username;
 
             Properties props = new Properties();
             props.put("mail.smtp.auth", "true");
@@ -68,10 +74,11 @@ public class EmailUtil {
                     });
 
 
+
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(sender));
+            message.setFrom(new InternetAddress(senderId));
             message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse(username));
+                    InternetAddress.parse(receiverId));
             message.setSubject("Contact Us Enquiry");
 
             message.setText(emailMessage);
@@ -80,9 +87,7 @@ public class EmailUtil {
 
             System.out.println("Done sending contact us emails");
 
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
+
     }
 
 

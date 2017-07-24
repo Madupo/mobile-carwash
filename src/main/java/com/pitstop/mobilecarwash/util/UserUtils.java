@@ -104,7 +104,6 @@ public class UserUtils {
                 else{
                     throw new NullPointerException("Complex not found please check your Details");
                 }
-
             }
             else{
                 throw new NullPointerException("Please provide a complex");
@@ -177,8 +176,6 @@ public class UserUtils {
                     if(newPasswordUser!=null){
                         return user;
                     }
-
-
             }
             else
             {
