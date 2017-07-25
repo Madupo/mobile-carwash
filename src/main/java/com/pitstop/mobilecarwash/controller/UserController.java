@@ -323,8 +323,8 @@ public class UserController {
                 throw new NullPointerException("Message not provided");
             }
 
-            if(data.has("cellphoneNumber")){
-                cellphoneNumber = data.get("cellphoneNumber").asText();
+            if(data.has("cellphone")){
+                cellphoneNumber = data.get("cellphone").asText();
             }
             EmailUtil.sendContactUsEmail(name,emailAddress,cellphoneNumber,message);
 
