@@ -76,7 +76,7 @@ public class EmailUtil {
                     });
 
         String emailText= "Email is from @ %s." +"\n" + "Contact number: %s" +"\n\n"+ " Message below:" +"\n" + "%s";
-        emailText = String.format(senderId, contactNumber, emailMessage);
+        emailText = String.format(emailText,senderId, contactNumber, emailMessage);
         System.out.println("**Formatted sms text: "+emailText);
 
 
