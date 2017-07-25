@@ -3,6 +3,8 @@ package com.pitstop.mobilecarwash.util;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
 
 /**
@@ -73,6 +75,10 @@ public class EmailUtil {
                         }
                     });
 
+        String emailText= "Email is from @ %s." +"\n" + "Contact number: %s" +"\n\n"+ " Message below:" +"\n" + "%s";
+        emailText = String.format(senderId, contactNumber, emailMessage);
+        System.out.println("**Formatted sms text: "+emailText);
+
 
 
             Message message = new MimeMessage(session);
@@ -81,7 +87,7 @@ public class EmailUtil {
                     InternetAddress.parse(receiverId));
             message.setSubject("Contact Us Enquiry");
 
-            message.setText(emailMessage);
+            message.setText(emailText);
 
             Transport.send(message);
 
