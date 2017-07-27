@@ -26,7 +26,7 @@ public class LoginServiceImpl implements LoginService {
             try {
                 User user = userRepository.findByEmailAddress(emailAddress);
 
-                if(user == null) return Result.failure("User not found! Please try another email address", HttpStatus.NOT_FOUND);
+                if(user == null) return Result.failure("Incorrect username or password. Please ensure that login details are correct", HttpStatus.NOT_FOUND);
              /*   if(!user.isActive()) return Result.failure("Your account is deactivated,please contact Administrator", HttpStatus.FORBIDDEN);*/
                 if(new PasswordEncrypt().validatePassword(password, user.getPassword()))
                     return Result.successful("User is active, password correct", HttpStatus.OK);
