@@ -115,6 +115,7 @@ public class WashController {
                 if(washDTO!=null){
                     System.out.println("Wash dto is not null");
                     wash = bookAWashService.bookWash(washDTO);
+                    System.out.println("wash after persisrance is service is " + wash);
                     return new ResponseEntity<>(new ObjectMapper().writeValueAsString(wash), HttpStatus.CREATED);
                 }else{
                     System.out.println("Wash dto is null");
