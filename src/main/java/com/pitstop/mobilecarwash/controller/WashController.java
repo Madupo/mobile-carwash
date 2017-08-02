@@ -166,12 +166,13 @@ public class WashController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity getWashes(@RequestHeader(value ="Authorization", defaultValue ="foo")String
-                                             authorization,  @PathVariable String id) {
+                                             authorization,  @PathVariable long id) {
         try {
             if (!SecurityUtils.authorize(authorization))
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-            long convertedId = Long.parseLong(id);
-            List<Wash> washes = bookAWashService.getUsersWashes(convertedId);
+            System.out.println("String id in getWashes is " + id);
+            /*long convertedId = Long.parseLong(id);*/
+            List<Wash> washes = bookAWashService.getUsersWashes(id);
             return new ResponseEntity<>(washes, HttpStatus.OK);
         } catch (NullPointerException e) {
             e.printStackTrace();
@@ -180,13 +181,14 @@ public class WashController {
         }
     }
 
-    @RequestMapping(value = "/single/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/single/{washId}", method = RequestMethod.GET)
     public ResponseEntity getWash(@RequestHeader(value ="Authorization", defaultValue ="foo")String
-                                            authorization,  @PathVariable String id) {
+                                            authorization,  @PathVariable long washId) {
         try {
             if (!SecurityUtils.authorize(authorization))
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-            long washId = Long.parseLong(id);
+            System.out.println("variable wash id is " + washId);
+           /* long convertedWashId = Long.parseLong(washId);*/
             Wash wash = bookAWashService.getOneWash(washId);
                 return new ResponseEntity<>(new ObjectMapper().writeValueAsString(wash), HttpStatus.OK);
         } catch (NullPointerException e) {
@@ -194,7 +196,6 @@ public class WashController {
             logger.debug(e.getLocalizedMessage());
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
             e.printStackTrace();
             logger.debug(e.getLocalizedMessage());
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
