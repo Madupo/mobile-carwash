@@ -89,7 +89,9 @@ public class MobileCarWashApplication {
 
 			//// TODO: 2017/06/30 add default complex
 			Complex complex = new Complex("First Complex","46 Geranium Street, Birch Acres, Kempton Park",new Date(),new Date());
+			Complex complex1 = new Complex("Second Complex","49 Geranium Street, Birch Acres, Kempton Park",new Date(),new Date());
 			complexService.addComplex(complex);
+			complexService.addComplex(complex1);
 
 			//// TODO: 2017/07/04 add default wash types
 			WashType washType = new WashType("Full Wash",90.00);
