@@ -180,7 +180,7 @@ public class WashController {
         }
     }
 
-    @RequestMapping(value = "single/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/single/{id}", method = RequestMethod.GET)
     public ResponseEntity getWash(@RequestHeader(value ="Authorization", defaultValue ="foo")String
                                             authorization,  @PathVariable String id) {
         try {
