@@ -54,20 +54,30 @@ public class MobileCarWashApplication {
 
 			//// TODO: 2017/06/30 add default complex
 			Complex complex = new Complex("First Complex","46 Geranium Street, Birch Acres, Kempton Park",new Date(),new Date());
+			Complex complex1 = new Complex("Second Complex","49 Geranium Street, Birch Acres, Kempton Park",new Date(),new Date());
 			complexService.addComplex(complex);
+			complexService.addComplex(complex1);
 
 			//// TODO: 2017/07/04 add default wash types
 			WashType washType = new WashType("Full Wash",90.00);
-			WashType washType1 = new WashType("Interior Wash", 50.00);
+			WashType washType1 = new WashType("Exterior Only",50.00);
+			WashType washType2 = new WashType("Interior Only", 50.00);
 			washTypeService.addWashType(washType);
 			washTypeService.addWashType(washType1);
+			washTypeService.addWashType(washType2);
 
 			//// TODO: 2017/07/17 add default washes
 			WashTime washTime = new WashTime("08:00 to 10:00");
-			WashTime washTime1 = new WashTime("10:00 to 11:00");
+			WashTime washTime1 = new WashTime("10:00 to 12:00");
+			WashTime washTime2 = new WashTime("13:00 to 15:00");
+			WashTime washTime3 = new WashTime("15:00 to 17:00");
+			WashTime washTime4 = new WashTime("17:00 to 18:00");
 
 			washTimeService.addWashTime(washTime);
 			washTimeService.addWashTime(washTime1);
+			washTimeService.addWashTime(washTime2);
+			washTimeService.addWashTime(washTime3);
+			washTimeService.addWashTime(washTime4);
 
 
 			//// TODO: 2017/06/30 add default user
@@ -95,16 +105,24 @@ public class MobileCarWashApplication {
 
 			//// TODO: 2017/07/04 add default wash types
 			WashType washType = new WashType("Full Wash",90.00);
-			WashType washType1 = new WashType("Interior Wash", 50.00);
+			WashType washType1 = new WashType("Exterior Only",50.00);
+			WashType washType2 = new WashType("Interior Only", 50.00);
 			washTypeService.addWashType(washType);
 			washTypeService.addWashType(washType1);
+			washTypeService.addWashType(washType2);
 
 			//// TODO: 2017/07/17 add default washes
 			WashTime washTime = new WashTime("08:00 to 10:00");
-			WashTime washTime1 = new WashTime("10:00 to 11:00");
+			WashTime washTime1 = new WashTime("10:00 to 12:00");
+			WashTime washTime2 = new WashTime("13:00 to 15:00");
+			WashTime washTime3 = new WashTime("15:00 to 17:00");
+			WashTime washTime4 = new WashTime("17:00 to 18:00");
 
 			washTimeService.addWashTime(washTime);
 			washTimeService.addWashTime(washTime1);
+			washTimeService.addWashTime(washTime2);
+			washTimeService.addWashTime(washTime3);
+			washTimeService.addWashTime(washTime4);
 
 
 			//// TODO: 2017/06/30 add default user
