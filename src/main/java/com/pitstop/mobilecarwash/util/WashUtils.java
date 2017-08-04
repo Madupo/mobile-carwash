@@ -55,12 +55,16 @@ public class WashUtils {
                 System.out.println("preferredTime is present");
                 String preferredTime = node.get("preferredTime").asText();
                 wash.setPreferredTime(preferredTime);
+            }else{
+                throw new NullPointerException("preferred time not provided. Please check your Details again");
             }
 
             if(node.has("numberOfVehicles")){
                 System.out.println("numberOfVehicles is present");
                 int numberOfVehicles = node.get("numberOfVehicles").asInt();
                 wash.setNumberOfVehicles(numberOfVehicles);
+            }else{
+                throw new NullPointerException("number Of Vehicles not provided. Please check your Details again");
             }
 
 

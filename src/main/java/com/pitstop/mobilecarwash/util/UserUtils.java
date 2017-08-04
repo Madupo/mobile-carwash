@@ -36,7 +36,7 @@ public class UserUtils {
             if(node.has("cellphone")){ user.setCellphone(node.get("cellphone").asText());}
             if(node.has("complexNumber")){user.setComplexNumber(node.get("complexNumber").asText());}
            /* if(node.has("active")){ user.setActive(node.get("active").asBoolean());}*/
-            /*if(node.has("complexId")){
+           /* if(node.has("complexId")){
                 long complex_id = node.get("complexId").asLong();
                 Complex complex = complexService.getComplex(complex_id);
                 if(complex!=null){

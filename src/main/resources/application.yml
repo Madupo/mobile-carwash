@@ -7,7 +7,7 @@ spring:
 # Run a specific environment as SPRING_PROFILES_ACTIVE=QA ./gradlew bootRun
 ---
 spring:
-    profiles: dev
+    profiles: QA
     jpa:
         hibernate:
             ddl-auto: create
