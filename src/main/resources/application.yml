@@ -1,13 +1,13 @@
 ---
 spring:
   profiles:
-      active: dev
+      active: QA
 
 # Set up for Docker environment
 # Run a specific environment as SPRING_PROFILES_ACTIVE=QA ./gradlew bootRun
 ---
 spring:
-    profiles: QA
+    profiles: dev
     jpa:
         hibernate:
             ddl-auto: create

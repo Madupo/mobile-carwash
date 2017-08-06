@@ -70,4 +70,15 @@ public class Complex {
     public void setComplexLocation(String complexLocation) {
         this.complexLocation = complexLocation;
     }
+
+    @Override
+    public String toString() {
+        return "Complex{" +
+                "id=" + id +
+                ", complexName='" + complexName + '\'' +
+                ", complexLocation='" + complexLocation + '\'' +
+                ", created=" + created +
+                ", modified=" + modified +
+                '}';
+    }
 }

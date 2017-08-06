@@ -211,6 +211,22 @@ public class User implements Serializable{
 
     @Override
     public String toString() {
-        return super.toString();
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", emailAddress='" + emailAddress + '\'' +
+                ", password='" + password + '\'' +
+                ", firstTimeLoggedIn=" + firstTimeLoggedIn +
+                ", role=" + role +
+                ", complex=" + complex +
+                ", created=" + created +
+                ", modified=" + modified +
+                ", salt='" + salt + '\'' +
+                ", cellphone='" + cellphone + '\'' +
+                ", complexNumber='" + complexNumber + '\'' +
+                ", creditBalance=" + creditBalance +
+                ", active=" + active +
+                '}';
     }
 }

@@ -30,11 +30,21 @@ public class UserUtils {
         System.out.println("user via email is " + user);
         if(user != null) {
             System.out.println("user is not null" + user);
-            if(node.has("name")){ user.setName(node.get("name").asText());}
-            if(node.has("surname")){ user.setSurname(node.get("surname").asText());}
-            if(node.has("emailAddress")){ user.setEmailAddress(node.get("emailAddress").asText());}
-            if(node.has("cellphone")){ user.setCellphone(node.get("cellphone").asText());}
-            if(node.has("complexNumber")){user.setComplexNumber(node.get("complexNumber").asText());}
+            if (node.has("name")) {
+                user.setName(node.get("name").asText());
+            }
+            if (node.has("surname")) {
+                user.setSurname(node.get("surname").asText());
+            }
+            if (node.has("emailAddress")) {
+                user.setEmailAddress(node.get("emailAddress").asText());
+            }
+            if (node.has("cellphone")) {
+                user.setCellphone(node.get("cellphone").asText());
+            }
+            if (node.has("complexNumber")) {
+                user.setComplexNumber(node.get("complexNumber").asText());
+            }
            /* if(node.has("active")){ user.setActive(node.get("active").asBoolean());}*/
            /* if(node.has("complexId")){
                 long complex_id = node.get("complexId").asLong();
@@ -49,24 +59,28 @@ public class UserUtils {
             }*/
 
 
-            if(node.has("complex")){
+            if (node.has("complexValue")) {
                 try {
-                    JsonNode arrNode = mapper.readTree(json).get("complex");
-                    System.out.println("array node is " + arrNode);
-                      long complex_id = node.get("id").asLong();
+                    JsonNode arrNode = node.get("complexValue");
+                    long complex_id = arrNode.get("id").asLong();
                     Complex complex = complexService.getComplex(complex_id);
-                if(complex!=null){
+                    if (complex != null) {
+                        user.setComplex(complex);
+                    }
+                } catch (Exception exp) {
+                }
+            } else if (node.has("complexId")) {
+                long complex_id = node.get("complexId").asLong();
+                Complex complex = complexService.getComplex(complex_id);
+                if (complex != null) {
                     user.setComplex(complex);
+                } else {
+                    throw new NullPointerException("Complex not found please check your update Details");
                 }
-                }catch(Exception exp){
-                }
-            }
 
-            else{
-                throw new NullPointerException("Please provide a complex");
+
             }
             user.setModified(new Date());
-
         }
         else {
             user = new User();

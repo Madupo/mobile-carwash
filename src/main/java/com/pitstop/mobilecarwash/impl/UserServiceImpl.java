@@ -33,19 +33,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUser(User user) {
+        System.out.println("user object coming in is " + user.toString());
         if(userRepository.findByEmailAddress(user.getEmailAddress())!=null)
         {
             User newUser = userRepository.findByEmailAddress(user.getEmailAddress());
+            System.out.println("user found by email is " + newUser.toString());
             newUser.setEmailAddress(user.getEmailAddress());
             newUser.setCellphone(user.getCellphone());
             newUser.setName(user.getName());
             newUser.setSurname(user.getSurname());
 
+            System.out.println("get complex before update is " + user.getComplex());
             //// TODO: 2017/06/28 add logic to update complex in update profile
             newUser.setComplex(user.getComplex());
             newUser.setComplexNumber(user.getComplexNumber());
+            System.out.println("get complex after update is " + newUser.getComplex());
             return userRepository.save(user);
-        }
+        }else
         throw new EntityNotFoundException("User cannot be updated. Not found!");
     }
 
