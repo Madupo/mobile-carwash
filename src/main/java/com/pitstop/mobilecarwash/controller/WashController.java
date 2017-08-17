@@ -100,15 +100,6 @@ public class WashController {
             System.out.println("json data is "  + data);
 
             Wash wash;
-
-                System.out.println("before generating washDTO");
-                System.out.println("before generating mapper " + mapper);
-                System.out.println("before generating json" + json );
-                System.out.println("before generating book a wash service " + bookAWashService);
-                System.out.println("before generating wash type service " + washTypeService);
-                System.out.println("before generating  user service " + userService);
-
-
                 Wash  washDTO = WashUtils.parse(json, mapper, bookAWashService,washTypeService,userService);
                 System.out.println("wash dto details is " + washDTO);
 
@@ -161,6 +152,37 @@ public class WashController {
             logger.debug(e.getLocalizedMessage());
             return new ResponseEntity<>(Message.create(e.getLocalizedMessage()), HttpStatus.BAD_REQUEST);
         }
+    }
+
+
+    @RequestMapping(value = "/cancel", method = RequestMethod.POST)
+    public ResponseEntity cancelWash(@RequestHeader(value = "Authorization", defaultValue = "foo") String authorization, @RequestBody String json) {
+        try {
+            if (!SecurityUtils.authorize(authorization))
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            Wash wash;
+            final JsonNode data = mapper.readTree(json);
+            if(data.has("id")) {
+                long washId = data.get("id").asLong();
+                wash = bookAWashService.getOneWash(washId);
+                if(wash!=null){
+                    Wash newWashObject = bookAWashService.cancelWash(wash);
+                    if(newWashObject!=null){
+                        return new ResponseEntity<>(HttpStatus.OK);
+                    }
+                    else{
+                        return new ResponseEntity<>(Message.create("Error updating wash"), HttpStatus.BAD_REQUEST);
+                    }
+                }
+            }
+             else {
+                return new ResponseEntity<>(Message.create("Error getting wash"), HttpStatus.BAD_REQUEST);
+            }
+        } catch (IOException e) {
+            logger.debug(e.getLocalizedMessage());
+            return new ResponseEntity<>(Message.create(e.getLocalizedMessage()), HttpStatus.BAD_REQUEST);
+        }
+        return null;
     }
 
 

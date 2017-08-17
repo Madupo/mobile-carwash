@@ -51,7 +51,7 @@ public class BookAWashServiceImpl implements BookAWashService {
         if(washRepository.findById(wash.getId())!=null)
         {
             Wash newWash = washRepository.findById(wash.getId());
-            newWash.setWashStatus(wash.getWashStatus());
+            newWash.setWashStatus("cancelled");
             return washRepository.save(newWash);
         }
         return null;
@@ -82,7 +82,7 @@ public class BookAWashServiceImpl implements BookAWashService {
         for(Wash wash : allWashes) {
             final Long id = wash.getUser().getId();
             System.out.println("id is " + id);
-            if(id.equals(userId))
+            if(id.equals(userId) && !wash.getWashStatus().equals("cancelled"))
                 specificWashes.add(wash);
         }
         return specificWashes;
