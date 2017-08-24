@@ -37,8 +37,8 @@ public class EmailUtil {
                 message.setRecipients(Message.RecipientType.TO,
                         InternetAddress.parse(recipient));
                 message.setSubject(subject);
-                String msg =  "Welcome to Pitstop Cleaning :)" +"\n" + "We hope you enjoy our ultimate car grooming service." +"\n\n"
-                            + " What are you waiting for? Lets book your first wash! " + "\n\n\n" + "Pitstop Cleaning Team" + "\n\n" +
+                String msg =  "Welcome to Pitstop Cleaning :)" +"\n\n" + "We hope you enjoy our ultimate car grooming service." +"\n\n"
+                            + " What are you waiting for? Lets book your first wash! " + "\n\n\n" + "Pitstop Cleaning Team" + "\n" +
                             "AFFORDABLE. GREEN. MOBILE";
 
                 message.setText(msg);
