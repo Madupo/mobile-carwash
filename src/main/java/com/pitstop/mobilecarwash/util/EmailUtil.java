@@ -37,7 +37,9 @@ public class EmailUtil {
                 message.setRecipients(Message.RecipientType.TO,
                         InternetAddress.parse(recipient));
                 message.setSubject(subject);
-                String msg =  "Thank you for creating an account with Pitstop Cleaning.";
+                String msg =  "Welcome to Pitstop Cleaning :)" +"\n" + "We hope you enjoy our ultimate car grooming service." +"\n"
+                            + " What are you waiting for? Lets book your first wash! " + "\n" + "<b>Pitstop Cleaning Team</b>" + "\n" +
+                            "AFFORDABLE. GREEN. MOBILE";
 
                 message.setText(msg);
 
@@ -75,7 +77,7 @@ public class EmailUtil {
                         }
                     });
 
-        String emailText= "Sender Email:  %s." +"\n" + "Sender Contact number: %s" +"\n\n"+ " Message:" +"\n" + "%s";
+        String emailText= "Sender Email:  %s." +"\n" + "Sender Contact number:  %s" +"\n\n"+ " Message: " +"\n" + "%s";
         emailText = String.format(emailText,senderId, contactNumber, emailMessage);
         System.out.println("**Formatted sms text: "+emailText);
 
